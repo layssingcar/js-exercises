@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기 만들기</title>
+
+    <style>
+        .container > div {padding: 5px;}
+
+        .container > div:first-child {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        button {width: 30px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>계산기 만들기</div>
+    
+        <div>
+            <label for="num1">숫자 1: <input type="text" id="num1"></label><br>
+            <label for="num2">숫자 2: <input type="text" id="num2"></label>
+        </div>
+    
+        <div>
+            <button type="button" id="add">+</button>
+            <button type="button" id="sub">-</button>
+            <button type="button" id="mul">*</button>
+            <button type="button" id="div">/</button>
+            <button type="button" id="rest">%</button>
+        </div>
+    
+        <div>
+            <span>계산 결과: </span>
+            <span id="result"></span>
+        </div>
+    </div>
+
+    <script>
+        const num1 = document.getElementById("num1");
+        const num2 = document.getElementById("num2");
+        const result = document.getElementById("result");
+
+        document.getElementById("add").addEventListener("click", () => {
+            result.innerText = Number(num1.value) + Number(num2.value);
+        });
+
+        document.getElementById("sub").addEventListener("click", () => {
+            result.innerText = Number(num1.value) - Number(num2.value);
+        });
+
+        document.getElementById("mul").addEventListener("click", () => {
+            result.innerText = Number(num1.value) * Number(num2.value);
+        });
+
+        document.getElementById("div").addEventListener("click", () => {
+            result.innerText = Number(num1.value) / Number(num2.value);
+        });
+
+        document.getElementById("rest").addEventListener("click", () => {
+            result.innerText = Number(num1.value) % Number(num2.value);
+        });
+    </script>
+</body>
+</html>
