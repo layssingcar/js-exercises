@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시계</title>
+
+    <style>
+        .container > div {padding: 5px;}
+
+        .container > div:first-child {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #time {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+            width: 300px;
+            height: 100px;
+            border: 2px solid black;
+            font-size: 70px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>시계</div>
+        <div id="time">00:00:00</div>
+    </div>
+
+    <script>
+        setInterval(() => {
+            const time = new Date();
+            
+            document.getElementById("time").innerText = 
+                addzero(time.getHours()) + ":" + 
+                addzero(time.getMinutes()) + ":" + 
+                addzero(time.getSeconds());
+        }, 1000);
+
+        function addzero(time) {
+            if (time < 10) return "0" + time;
+            else return time;
+        }
+    </script>
+</body>
+</html>
