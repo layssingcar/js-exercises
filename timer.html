@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타이머</title>
+
+    <style>
+        .container > div {padding: 5px;}
+
+        .container > div:first-child {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container > div:last-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 310px;
+        }
+
+        #time {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+            width: 300px;
+            height: 100px;
+            border: 2px solid black;
+            font-size: 70px;
+        }
+
+        button {width: 150px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>타이머</div>
+
+        <div>
+            <div id="time">
+                <span id="hour">00</span>
+                <span>:</span>
+                <span id="minute">00</span>
+                <span>:</span>
+                <span id="second">00</span>
+            </div>
+    
+            <div>
+                <button type="button" id="status">start</button>
+                <button type="button" id="reset">reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hour = document.getElementById("hour");
+        const minute = document.getElementById("minute");
+        const second = document.getElementById("second");
+        const status = document.getElementById("status");
+        const reset = document.getElementById("reset");
+        let flag = true;
+        let interval;
+
+        // initial value
+        let setHour;
+        let setMinute;
+        let setSecond;
+        
+        function wheel(e, maxTime) {
+            let count = Number(e.target.innerText);
+            if (e.deltaY < 0) count = Math.min(maxTime, count + 1);
+            else count = Math.max(0, count - 1);
+            e.target.innerText = addzero(count);
+        }
+
+        function timer() {
+            interval = setInterval(() => {
+
+                if (second.innerText > 0) {
+                    second.innerText = addzero(second.innerText - 1);
+                    return;
+                }
+
+                if (minute.innerText > 0) {
+                    minute.innerText = addzero(minute.innerText - 1);
+                    second.innerText = 59;
+                    return;
+                }
+
+                if (hour.innerText > 0) {
+                    hour.innerText = addzero(hour.innerText - 1);
+                    minute.innerText = 59;
+                    second.innerText = 59;
+                    return;
+                }
+
+                status.innerText = "start"; // 1초 느림
+                clearInterval(interval);
+                // 소리로 변경
+
+            }, 1);
+        }
+
+        function addzero(num) {
+            if (num < 10) return "0" + num;
+            else return num;
+        }
+
+        // time settings
+        hour.addEventListener("wheel", (e) => {wheel(e, 99)});
+        minute.addEventListener("wheel", (e) => {wheel(e, 59)});
+        second.addEventListener("wheel", (e) => {wheel(e, 59)});
+
+        status.addEventListener("click", () => {
+
+            // not settings
+            if (hour.innerText == 0 && minute.innerText == 0 && second.innerText == 0) return;
+
+            // start
+            if (status.innerText === "start") {
+                status.innerText = "stop";
+
+                // initial value settings
+                if (flag) {
+                    setHour = hour.innerText;
+                    setMinute = minute.innerText;
+                    setSecond = second.innerText;
+                    flag = false;
+                }
+
+                timer();
+
+            // stop
+            } else {
+                status.innerText = "start";
+                clearInterval(interval);
+            }
+
+        });
+
+        // reset
+        reset.addEventListener("click", () => {
+            status.innerText = "start"                                                                                                                                                                                                                        ;
+            hour.innerText = setHour;
+            minute.innerText = setMinute;
+            second.innerText = setSecond;
+            clearInterval(interval);
+            flag = true;
+        });
+    </script>
+</body>
+</html>
