@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배경색 변경하기</title>
+
+    <style>
+        .container > div {padding: 5px;}
+
+        .container > div:first-child {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container > div:last-child {display: flex;}
+
+        .chart {margin: 5px;}
+
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #767676;
+        }
+
+        .color {
+            display: block;
+            width: 95px;
+            margin-top: 3px;
+        }
+
+        button {width: 102px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>배경색 변경하기</div>
+
+        <div>
+            <div class="chart">
+                <div class="box"></div>
+                <label for="color"><input type="text" class="color"></label>
+                <button type="button" class="change">change</button>
+            </div>
+
+            <div class="chart">
+                <div class="box"></div>
+                <label for="color"><input type="text" class="color"></label>
+                <button type="button" class="change">change</button>
+            </div>
+
+            <div class="chart">
+                <div class="box"></div>
+                <label for="color"><input type="text" class="color"></label>
+                <button type="button" class="change">change</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chart = document.getElementsByClassName("chart");
+
+        for (let i = 0; i < chart.length; i++) {
+            chart[i].children[2].addEventListener("click", () => {
+                chart[i].children[0].style.backgroundColor = chart[i].children[1].firstChild.value;
+            });
+        }
+    </script>
+</body>
+</html>
