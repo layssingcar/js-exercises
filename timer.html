@@ -59,6 +59,7 @@
         const second = document.getElementById("second");
         const status = document.getElementById("status");
         const reset = document.getElementById("reset");
+        const alarm = new Audio("mp3/alarm.mp3");
         let flag = true;
         let interval;
 
@@ -79,6 +80,14 @@
 
                 if (second.innerText > 0) {
                     second.innerText = addzero(second.innerText - 1);
+
+                    // timer over
+                    if (second.innerText == 0 && minute.innerText == 0 && hour.innerText == 0) {
+                        status.innerText = "start";
+                        clearInterval(interval);
+                        alarm.play();
+                    }
+
                     return;
                 }
 
@@ -95,11 +104,7 @@
                     return;
                 }
 
-                status.innerText = "start"; // 1초 느림
-                clearInterval(interval);
-                // 소리로 변경
-
-            }, 1);
+            }, 1000);
         }
 
         function addzero(num) {
@@ -141,12 +146,19 @@
 
         // reset
         reset.addEventListener("click", () => {
-            status.innerText = "start"                                                                                                                                                                                                                        ;
-            hour.innerText = setHour;
-            minute.innerText = setMinute;
-            second.innerText = setSecond;
-            clearInterval(interval);
-            flag = true;
+
+            // not settings
+            if (flag) return;
+
+            else {
+                status.innerText = "start"                                                                                                                                                                                                                        ;
+                hour.innerText = setHour;
+                minute.innerText = setMinute;
+                second.innerText = setSecond;
+                clearInterval(interval);
+                flag = true;
+            }
+
         });
     </script>
 </body>
